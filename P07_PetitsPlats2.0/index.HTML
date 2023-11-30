@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <link href="./style.css" rel="stylesheet" type="text/css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Petits Plats</title>
+</head>
+<body>
+    <header>
+       <h3>LES PETITS PLATS</h3>
+       <h1>CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN, SIMPLES ET DÉLICIEUSES</h1>
+        <form>
+            <input id="search" type="text" name="search" placeholder="Recherchez une recette, un ingrédient,...">
+        </form>
+    </header>
+    <main>
+        <section id="filterSection">
+            <button>Ingrédient</button>
+            <button>Appareils</button>
+            <button>Ustensiles</button>
+            <p>1500 recettes</p>
+        </section>
+        <section id="cardContent"></section>
+    </main>
+    <script src="data/recipes.js"></script>
+    <script src="scripts/index.js"></script>
+</body>
+</html>

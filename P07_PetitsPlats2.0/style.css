@@ -1,0 +1,47 @@
+body{
+    margin: 0 !important;
+}
+header{
+    padding: 50px;
+    background-color: black;
+}
+h1{
+    display: flex;
+    margin: auto;
+    margin-bottom: 30px;
+    color: #FFD15B;
+    width: 60%;
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 66px;
+    text-align: center;
+}
+h3{
+    color: white;
+}
+#search{
+    display: flex;
+    width: 60%;
+    margin: auto;
+    border: 1px solid white;
+    padding: 15px;
+    border-radius: 5px;
+    outline: none;
+}
+#filterSection{
+    display: flex;
+}
+#filterSection button{
+    margin: auto 2%;
+}
+article{
+    border: 1px solid black;
+    border-radius: 14px;
+    overflow: hidden;
+    width: 380px;
+}
+.imgCard{
+    width: 380px;
+    height: 253px;
+    object-fit: cover;
+}
