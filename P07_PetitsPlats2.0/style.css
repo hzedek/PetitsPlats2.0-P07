@@ -1,16 +1,28 @@
+html{
+    font-family: anton;
+}
 body{
     margin: 0 !important;
+    background-color: #E5E5E5;
 }
+/*HEADER*/
 header{
     padding: 50px;
-    background-color: black;
+    background:url('./assets/lampos-aritonang-24gR_9lCdes-unsplash\ 1.png');
+    background-size:cover;
+    background-repeat: no-repeat;
+    height: 667px;
+    background-position: center;
+}
+header img{
+    width: 207px;
 }
 h1{
     display: flex;
     margin: auto;
     margin-bottom: 30px;
     color: #FFD15B;
-    width: 60%;
+    width: 70%;
     font-weight: 400;
     font-size: 44px;
     line-height: 66px;
@@ -19,29 +31,61 @@ h1{
 h3{
     color: white;
 }
+.center{
+    display: flex;
+    flex-direction: column;
+    margin:200px auto;
+}
 #search{
     display: flex;
-    width: 60%;
+    width: 80%;
     margin: auto;
     border: 1px solid white;
-    padding: 15px;
+    padding: 20px;
     border-radius: 5px;
     outline: none;
 }
+/*MAIN*/
+main{
+    width: 90%;
+    margin: auto;
+}
 #filterSection{
     display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
 }
-#filterSection button{
-    margin: auto 2%;
+#filterSection div{
+    display: flex;
+}
+#filterSection div button {
+    margin-right:20px;
+}
+/*CARD*/
+#cardContent{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 article{
-    border: 1px solid black;
+    border: 1px solid none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 14px;
     overflow: hidden;
     width: 380px;
+    background-color: white;
+    margin-top: 50px;
 }
 .imgCard{
     width: 380px;
     height: 253px;
     object-fit: cover;
+}
+.ingredients{
+    display: flex;
+    flex-wrap: wrap;
+    width: 60%;
+}
+.ingredient{
+    margin: auto 5px;
 }
