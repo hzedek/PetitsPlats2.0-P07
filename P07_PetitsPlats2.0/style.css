@@ -3,11 +3,15 @@
     src: url('/P07_PetitsPlats2.0/assets/Anton/anton-v25-latin-regular.woff2') format('woff2');
   }
 html{
-    font-family: 'Anton', sans-serif;
+    font-family: 'Manrope', sans-serif;
+
 }
 body{
     margin: 0 !important;
     background-color: #E5E5E5;
+}
+.anton{
+    font-family: 'Anton', sans-serif;
 }
 /*HEADER*/
 header{
@@ -17,11 +21,13 @@ header{
     background-repeat: no-repeat;
     height: 667px;
     background-position: center;
+    position: relative;
 }
 header img{
     width: 207px;
 }
 h1{
+    font-family: 'Anton', sans-serif;
     display: flex;
     margin: auto;
     margin-bottom: 30px;
@@ -40,15 +46,41 @@ h3{
     flex-direction: column;
     margin:200px auto;
 }
-#search{
+
+.searchContainer {
+    position: relative;
     display: flex;
-    width: 60%;
+}
+
+#search {
+    width: 954px;
     margin: auto;
     border: 1px solid white;
-    padding: 20px;
+    padding: 25px;
     border-radius: 5px;
     outline: none;
 }
+.searchBtn img {
+    width: 52px;
+    position: absolute;
+    right: 180px;
+    bottom: 7px;
+    transition: opacity 0.5s ease;
+}
+
+.searchBtn .hovered {
+    opacity: 0;
+}
+
+.searchBtn:hover .normal {
+    opacity: 0;
+}
+
+.searchBtn:hover .hovered {
+    opacity: 1;
+}
+
+
 /*MAIN*/
 main{
     width: 90%;
@@ -66,6 +98,13 @@ main{
     margin-right:20px;
 }
 /*CARD*/
+.cardText{
+    font-size: 14px;
+    line-height: 19.12px;   
+}
+.grey{
+    color: #7A7A7A;
+}
 #cardContent{
     display: flex;
     flex-wrap: wrap;

@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope&display=swap" rel="stylesheet"> 
     <link href="./style.css" rel="stylesheet" type="text/css"/>
+    <link rel="icon" type="image/png" href="assets/icone.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Les Petits Plats</title>
@@ -12,7 +16,13 @@
        <div class="center">
         <h1>CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN, SIMPLES ET DÉLICIEUSES</h1>
         <form>
-            <input id="search" type="text" name="search" placeholder="Recherchez une recette, un ingrédient,...">
+            <div class="searchContainer">
+                <input id="search" type="text" name="search" placeholder="Recherchez une recette, un ingrédient,...">
+                <div class="searchBtn">
+                    <img src="assets/Loop.png" alt="boutton pour rechercher" class="normal">
+                    <img src="assets/LoopYellow.png" alt="boutton pour rechercher" class="hovered">
+                </div>
+            </div>
         </form>
        </div>
     </header>
@@ -23,7 +33,7 @@
             <button>Appareils</button>
             <button>Ustensiles</button>
             </div>
-            <p>1500 recettes</p>
+            <p id="recetteNbr" class="anton">1500 recettes</p>
         </section>
         <section id="cardContent"></section>
     </main>
