@@ -29,7 +29,6 @@ for (let index = 0; index < recipes.length; index++) {
     article.appendChild(p_ingredients)
     article.appendChild(div)
 
-    console.log(article);
 
     for (let i = 0; i < card.ingredients.length; i++) {
         const ingredient = card.ingredients[i];
@@ -48,6 +47,5 @@ for (let index = 0; index < recipes.length; index++) {
     }
 }
 console.log(recipes);
-console.log(recipes[0].ingredients);
 
 
