@@ -98,13 +98,6 @@ main{
     margin-right:20px;
 }
 /*CARD*/
-.cardText{
-    font-size: 14px;
-    line-height: 19.12px;   
-}
-.grey{
-    color: #7A7A7A;
-}
 #cardContent{
     display: flex;
     flex-wrap: wrap;
@@ -116,19 +109,61 @@ article{
     border-radius: 14px;
     overflow: hidden;
     width: 380px;
+    height: 731px;
     background-color: white;
     margin-top: 50px;
+    position: relative;
 }
 .imgCard{
     width: 380px;
     height: 253px;
     object-fit: cover;
 }
+.duree{
+    position: absolute;
+    right: 20px;
+    top: 0;
+    border: 1px none none;
+    background-color: #FFD15B;
+    width: 63px;
+    height: 26px;
+    border-radius: 14px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 26px;
+}
+.cardTextMargin{
+    margin:auto;
+    width: 330px;
+}
+.cardText{
+    font-size: 14px;
+    margin-bottom: 30px;
+    height:76px;
+    overflow: hidden;
+    line-height: 19.12px;
+}
+.subTitlesize{
+    font-size:12px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+.TitleSize{
+    font-size: 18px;
+    margin:30px auto ;
+}
+.grey{
+    color: #7A7A7A;
+}
 .ingredients{
     display: flex;
     flex-wrap: wrap;
-    width: 60%;
+    justify-content: space-between;
 }
 .ingredient{
-    margin: auto 5px;
+    font-size: 14px;
+    line-height: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    width: 150px;
 }
