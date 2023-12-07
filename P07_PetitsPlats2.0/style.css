@@ -1,169 +1,207 @@
 @font-face {
-    font-family: 'Anton';
-    src: url('/P07_PetitsPlats2.0/assets/Anton/anton-v25-latin-regular.woff2') format('woff2');
-  }
-html{
-    font-family: 'Manrope', sans-serif;
+  font-family: "Anton";
+  src: url("/P07_PetitsPlats2.0/assets/Anton/anton-v25-latin-regular.woff2")
+    format("woff2");
+}
+html {
+  font-family: "Manrope", sans-serif;
+}
+body {
+  margin: 0 !important;
+  background-color: #e5e5e5;
+}
+.anton {
+  font-family: "Anton", sans-serif;
+}
 
-}
-body{
-    margin: 0 !important;
-    background-color: #E5E5E5;
-}
-.anton{
-    font-family: 'Anton', sans-serif;
-}
 /*HEADER*/
-header{
-    padding: 50px;
-    background:url('./assets/lampos-aritonang-24gR_9lCdes-unsplash\ 1.png');
-    background-size:cover;
-    background-repeat: no-repeat;
-    height: 667px;
-    background-position: center;
-    position: relative;
+header {
+  padding: 50px;
+  background: url("./assets/lampos-aritonang-24gR_9lCdes-unsplash\ 1.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 667px;
+  background-position: center;
+  position: relative;
 }
-header img{
-    width: 207px;
+header img {
+  width: 207px;
 }
-h1{
-    font-family: 'Anton', sans-serif;
-    display: flex;
-    margin: auto;
-    margin-bottom: 30px;
-    color: #FFD15B;
-    width: 50%;
-    font-weight: 400;
-    font-size: 44px;
-    line-height: 66px;
-    text-align: center;
+h1 {
+  font-family: "Anton", sans-serif;
+  display: flex;
+  margin: auto;
+  margin-bottom: 30px;
+  color: #ffd15b;
+  width: 50%;
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 66px;
+  text-align: center;
 }
-h3{
-    color: white;
+h3 {
+  color: white;
 }
-.center{
-    display: flex;
-    flex-direction: column;
-    margin:200px auto;
+.center {
+  display: flex;
+  flex-direction: column;
+  margin: 200px auto;
 }
 
 .searchContainer {
-    position: relative;
-    display: flex;
+  position: relative;
+  display: flex;
 }
 
 #search {
-    width: 954px;
-    margin: auto;
-    border: 1px solid white;
-    padding: 25px;
-    border-radius: 5px;
-    outline: none;
+  width: 954px;
+  margin: auto;
+  border: 1px solid white;
+  padding: 25px;
+  border-radius: 5px;
+  outline: none;
 }
 .searchBtn img {
-    width: 52px;
-    position: absolute;
-    right: 180px;
-    bottom: 7px;
-    transition: opacity 0.5s ease;
+  width: 52px;
+  position: absolute;
+  right: 180px;
+  bottom: 7px;
+  transition: opacity 0.5s ease;
 }
-
 .searchBtn .hovered {
-    opacity: 0;
+  opacity: 0;
 }
-
 .searchBtn:hover .normal {
-    opacity: 0;
+  opacity: 0;
 }
-
 .searchBtn:hover .hovered {
-    opacity: 1;
+  opacity: 1;
 }
-
 
 /*MAIN*/
-main{
-    width: 90%;
-    margin: auto;
+main {
+  width: 90%;
+  margin: auto;
 }
-#filterSection{
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+
+/*SEARCH*/
+#filterSection {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
-#filterSection div{
-    display: flex;
+#filterSection div {
+  display: flex;
 }
-#filterSection div button {
-    margin-right:20px;
+#filterSection div div {
+  position: relative;
+}
+#filterSection div div button {
+  border: 1px solid white;
+  background-color: white;
+  border-radius: 11px;
+  width: 237px;
+  height: 56px;
+  margin-right: 80px;
+  margin-top: 10px;
+  text-align: start;
+  padding-left: 40px;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: "Manrope";
+}
+#ingredients {
+  position: absolute;
+  top: 40px;
+}
+#Appareils {
+  position: absolute;
+  top: 40px;
+}
+#Ustensiles {
+  position: absolute;
+  top: 40px;
+}
+ul {
+  display: none;
+  border: 1px solid white;
+  background-color: white;
+  border-radius: 0 0 11px 11px;
+  width: 195px;
+  z-index: 20;
+  overflow: auto;
+  max-height: 315px;
+}
+li {
+  list-style-type: none;
 }
 /*CARD*/
-#cardContent{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+#cardContent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
-article{
-    border: 1px solid none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 14px;
-    overflow: hidden;
-    width: 380px;
-    height: 731px;
-    background-color: white;
-    margin-top: 50px;
-    position: relative;
+article {
+  border: 1px solid none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  overflow: hidden;
+  width: 380px;
+  height: 731px;
+  background-color: white;
+  margin-top: 50px;
+  position: relative;
 }
-.imgCard{
-    width: 380px;
-    height: 253px;
-    object-fit: cover;
+.imgCard {
+  width: 380px;
+  height: 253px;
+  object-fit: cover;
 }
-.duree{
-    position: absolute;
-    right: 20px;
-    top: 0;
-    border: 1px none none;
-    background-color: #FFD15B;
-    width: 63px;
-    height: 26px;
-    border-radius: 14px;
-    text-align: center;
-    font-size: 12px;
-    line-height: 26px;
+.duree {
+  position: absolute;
+  right: 20px;
+  top: 0;
+  border: 1px none none;
+  background-color: #ffd15b;
+  width: 63px;
+  height: 26px;
+  border-radius: 14px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 26px;
 }
-.cardTextMargin{
-    margin:auto;
-    width: 330px;
+.cardTextMargin {
+  margin: auto;
+  width: 330px;
 }
-.cardText{
-    font-size: 14px;
-    margin-bottom: 30px;
-    height:76px;
-    overflow: hidden;
-    line-height: 19.12px;
+.cardText {
+  font-size: 14px;
+  margin-bottom: 30px;
+  height: 76px;
+  overflow: hidden;
+  line-height: 19.12px;
 }
-.subTitlesize{
-    font-size:12px;
-    font-weight: 700;
-    margin-bottom: 12px;
+.subTitlesize {
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 12px;
 }
-.TitleSize{
-    font-size: 18px;
-    margin:30px auto ;
+.TitleSize {
+  font-size: 18px;
+  margin: 30px auto;
 }
-.grey{
-    color: #7A7A7A;
+.grey {
+  color: #7a7a7a;
 }
-.ingredients{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+.ingredients {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
-.ingredient{
-    font-size: 14px;
-    line-height: 5px;
-    margin-bottom: 10px;
-    margin-right: 10px;
-    width: 150px;
+.ingredient {
+  font-size: 14px;
+  line-height: 5px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  width: 150px;
 }
