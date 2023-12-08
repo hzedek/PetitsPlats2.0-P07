@@ -11,6 +11,10 @@
     <link rel="icon" type="image/png" href="assets/icone.png" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/661099fb41.js"
+      crossorigin="anonymous"
+    ></script>
     <title>Les Petits Plats</title>
   </head>
   <body>
@@ -52,16 +56,52 @@
       <section id="filterSection">
         <div>
           <div>
-            <button onclick="btnToggle(ingredientsBtn)">Ingrédients</button>
-            <ul id="ingredients"></ul>
+            <button onclick="btnToggle(ingredientsBtn)">
+              Ingrédients<i class="ingredients fa-solid fa-chevron-down"></i>
+            </button>
+            <ul id="ingredients">
+              <input
+                id="searchIngredients"
+                type="text"
+                name="search"
+                class="smallSearch"
+              />
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </ul>
           </div>
           <div>
-            <button onclick="btnToggle(AppareilsBtn)">Appareils</button>
-            <ul id="Appareils"></ul>
+            <button onclick="btnToggle(AppareilsBtn)">
+              Appareils<i
+                id="AppareilsIcon"
+                class="Appareils fa-solid fa-chevron-down"
+              ></i>
+            </button>
+            <ul id="Appareils">
+              <input
+                id="searchAppareils"
+                type="text"
+                name="search"
+                class="smallSearch"
+              />
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </ul>
           </div>
           <div>
-            <button onclick="btnToggle(UstensilesBtn)">Ustensiles</button>
-            <ul id="Ustensiles"></ul>
+            <button onclick="btnToggle(UstensilesBtn)">
+              Ustensiles<i
+                id="UstensilesIcon"
+                class="Ustensiles fa-solid fa-chevron-down"
+              ></i>
+            </button>
+            <ul id="Ustensiles">
+              <input
+                id="searchUstensiles"
+                type="text"
+                name="search"
+                class="smallSearch"
+              />
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </ul>
           </div>
         </div>
         <p id="recetteNbr" class="anton"></p>

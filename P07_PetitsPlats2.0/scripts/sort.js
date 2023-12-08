@@ -1,6 +1,7 @@
 const ingredientsBtn = document.getElementById("ingredients");
 const AppareilsBtn = document.getElementById("Appareils");
 const UstensilesBtn = document.getElementById("Ustensiles");
+const ingredientsIcon = document.getElementById("ingredientsIcon");
 
 //RÉCUPÉRATION DES DONNÉES PAR BOUTTONS ET CRITÈRES
 
@@ -47,11 +48,19 @@ for (let index = 0; index < newUstensilesLi.length; index++) {
   let li_dom = document.createElement("li");
   li_dom.textContent = li;
   UstensilesBtn.appendChild(li_dom);
-  UstensilesBtn.style.height = "315px";
 }
 
 function btnToggle(btn) {
   btn.style.display = btn.style.display === "none" ? "block" : "none";
+  let icon = document.querySelector(`.${btn.id}`);
+  //SWITCH Chevron UP&DOWN -------------------------
+  if (btn.style.display === "block") {
+    icon.classList.remove("fa-chevron-down");
+    icon.classList.add("fa-chevron-up");
+  } else {
+    icon.classList.remove("fa-chevron-up");
+    icon.classList.add("fa-chevron-down");
+  }
 }
 
 //NBR DE RECETTES
@@ -64,3 +73,14 @@ if (recipes.length < 2) {
 }
 
 console.log(recipes);
+
+//<li> CHANGEMENT DE STYLE AU CLICK
+ let li = document.querySelectorAll("li")
+ li.forEach(element => {
+    element.addEventListener('click',()=>{
+        element.style.backgroundColor = element.style.backgroundColor === "" ? "#ffd15b" : "";
+        element.style.margin = element.style.margin === "" ? "5px auto" : "";
+
+    })
+    
+ });

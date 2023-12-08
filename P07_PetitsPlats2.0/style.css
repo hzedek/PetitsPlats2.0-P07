@@ -85,10 +85,12 @@ main {
 }
 
 /*SEARCH*/
+
 #filterSection {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+  width: 95%;
 }
 #filterSection div {
   display: flex;
@@ -100,46 +102,56 @@ main {
   border: 1px solid white;
   background-color: white;
   border-radius: 11px;
-  width: 237px;
+  width: 195px;
   height: 56px;
   margin-right: 80px;
   margin-top: 10px;
   text-align: start;
-  padding-left: 40px;
+  padding-left: 20px;
   font-size: 16px;
   font-weight: 500;
   font-family: "Manrope";
-}
-#ingredients {
-  position: absolute;
-  top: 40px;
-}
-#Appareils {
-  position: absolute;
-  top: 40px;
-}
-#Ustensiles {
-  position: absolute;
-  top: 40px;
+  position: relative;
 }
 ul {
   display: none;
   border: 1px solid white;
   background-color: white;
   border-radius: 0 0 11px 11px;
-  width: 195px;
+  width: 193px;
   z-index: 20;
   overflow: auto;
   max-height: 315px;
+  position: absolute;
+  top: 40px;
+  padding: 0;
 }
 li {
   list-style-type: none;
+  cursor: pointer;
+  line-height: 26px;
+  padding-left: 20px;
+}
+.fa-chevron-down, .fa-chevron-up{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+.smallSearch{
+  width: 146px;
+  height: 25px;
+  margin: 10px 20px;
+}
+.fa-magnifying-glass{
+  position: absolute;
+  right: 30px;
+  top: 18px;
+  color: #7a7a7a;
 }
 /*CARD*/
 #cardContent {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
 }
 article {
   border: 1px solid none;
@@ -151,6 +163,7 @@ article {
   background-color: white;
   margin-top: 50px;
   position: relative;
+  margin-right: 52px;
 }
 .imgCard {
   width: 380px;
