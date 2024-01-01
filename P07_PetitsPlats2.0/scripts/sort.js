@@ -2,6 +2,7 @@ const ingredientsBtn = document.getElementById("ingredients");
 const AppareilsBtn = document.getElementById("Appareils");
 const UstensilesBtn = document.getElementById("Ustensiles");
 const ingredientsIcon = document.getElementById("ingredientsIcon");
+const searchDOM = document.getElementById("search");
 
 //RÉCUPÉRATION DES DONNÉES PAR BOUTTONS ET CRITÈRES
 
@@ -75,12 +76,39 @@ if (recipes.length < 2) {
 console.log(recipes);
 
 //<li> CHANGEMENT DE STYLE AU CLICK
- let li = document.querySelectorAll("li")
- li.forEach(element => {
-    element.addEventListener('click',()=>{
-        element.style.backgroundColor = element.style.backgroundColor === "" ? "#ffd15b" : "";
-        element.style.margin = element.style.margin === "" ? "5px auto" : "";
+let li = document.querySelectorAll("li");
+li.forEach((element) => {
+  element.addEventListener("click", () => {
+    element.style.backgroundColor =
+      element.style.backgroundColor === "" ? "#ffd15b" : "";
+    element.style.margin = element.style.margin === "" ? "5px auto" : "";
+  });
+});
 
-    })
+searchDOM.addEventListener("input", () => {
+  if (searchDOM.value.length > 2) {
+    let searchTerm = searchDOM.value;
+    // Utilisez la méthode filter pour créer un nouvel array avec les résultats de la recherche
+    const resultatName = recipes.filter((recip) =>
+      recip.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    const resultatdescription = recipes.filter((recip) =>
+      recip.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
     
- });
+    let resultatIngredients = [];
+      for (let index = 0; index < recipes.length; index++) {
+        const element = recipes[index].ingredients;
+        const resultatIngredient = element.filter((recip) =>
+        recip.ingredient.toLowerCase().includes(searchTerm.toLowerCase()) 
+        );
+        if (resultatIngredient.length>0) {
+            resultatIngredients.push(recipes[index])
+        }
+      }
+    
+
+    console.log(resultatName,resultatdescription);
+    console.log(resultatIngredients, "ingredient");
+    }
+});
