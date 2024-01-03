@@ -64,17 +64,6 @@ function btnToggle(btn) {
   }
 }
 
-//NBR DE RECETTES
-
-const nbrRecettes = document.getElementById("recetteNbr");
-if (recipes.length < 2) {
-  nbrRecettes.textContent = recipes.length + " Recette";
-} else {
-  nbrRecettes.textContent = recipes.length + " Recettes";
-}
-
-console.log(recipes);
-
 //<li> CHANGEMENT DE STYLE AU CLICK
 let li = document.querySelectorAll("li");
 li.forEach((element) => {
@@ -85,30 +74,73 @@ li.forEach((element) => {
   });
 });
 
+
+//NBR DE RECETTES
+function nbrRecette(array) {
+  const nbrRecettes = document.getElementById("recetteNbr");
+if (array.length < 2) {
+  nbrRecettes.textContent = array.length + " Recette";
+} else {
+  nbrRecettes.textContent = array.length + " Recettes";
+}
+}
+
+function sorting(array) {
+  const uniqueElements = {};
+  const sortedArray = array.filter(result => {
+    // Si l'élément n'est pas déjà présent, l'ajouter à l'objet et inclure l'élément
+    if (!uniqueElements[result.id]) {
+      uniqueElements[result.id] = true;
+      return true;
+    }
+    // Sinon, l'élément est un doublon, ne pas l'inclure
+    return false;
+  });
+  return sortedArray;
+}
+
 searchDOM.addEventListener("input", () => {
   if (searchDOM.value.length > 2) {
     let searchTerm = searchDOM.value;
+
     // Utilisez la méthode filter pour créer un nouvel array avec les résultats de la recherche
-    const resultatName = recipes.filter((recip) =>
+
+    let resultatArray = []; 
+
+    let resultatName = recipes.filter((recip) =>
       recip.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    const resultatdescription = recipes.filter((recip) =>
+
+    let resultatdescription = recipes.filter((recip) =>
       recip.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
     
-    let resultatIngredients = [];
       for (let index = 0; index < recipes.length; index++) {
         const element = recipes[index].ingredients;
         const resultatIngredient = element.filter((recip) =>
         recip.ingredient.toLowerCase().includes(searchTerm.toLowerCase()) 
         );
         if (resultatIngredient.length>0) {
-            resultatIngredients.push(recipes[index])
+            resultatArray.push(recipes[index])
         }
       }
-    
+      for (let x = 0; x < resultatName.length; x++) {
+        const eachResult = resultatName[x];
+        resultatArray.push(eachResult)
+      }
+      for (let i = 0; i < resultatdescription.length; i++) {
+        const eachResult = resultatdescription[i];
+        resultatArray.push(eachResult)
+      }
+      let sortedArray = sorting(resultatArray)
+      cardContent.innerHTML = "";
+      init(sortedArray)
 
-    console.log(resultatName,resultatdescription);
-    console.log(resultatIngredients, "ingredient");
     }
 });
+
+function init(array) {
+  nbrRecette(array)
+  cardDisplay(array)
+}
+init([...recipes])

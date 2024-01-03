@@ -1,10 +1,11 @@
 let cardContent = document.getElementById("cardContent");
 
 // CRÉATION DE TOUTLES CARTES RECETTES
-
-for (let index = 0; index < recipes.length; index++) {
+function cardDisplay(array) {
+  
+for (let index = 0; index < array.length; index++) {
   let article = document.createElement("article");
-  const card = recipes[index];
+  const card = array[index];
   const portrait = `./assets/${card.image}`;
 
   //création d'UNE Card DOM
@@ -55,4 +56,5 @@ for (let index = 0; index < recipes.length; index++) {
     div.appendChild(p_ingredient);
     p_ingredient.appendChild(p_quantity);
   }
+}
 }
