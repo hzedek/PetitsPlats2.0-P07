@@ -12,7 +12,7 @@ const AppareilLi = document.getElementById("AppareilsLi");
 
 //RÉCUPÉRATION DES DONNÉES PAR BOUTTONS ET CRITÈRES
 
-function createLi(ul,array) {
+async function createLi(ul,array) {
   let divLi = ul.children[2]; 
   divLi.innerHTML = "";
   let listLi = [];
@@ -41,21 +41,19 @@ function createLi(ul,array) {
     li_dom.textContent = li;
     divLi.appendChild(li_dom);
   }
-  return newlistLi,
   changeLi()
+  return newlistLi
 }
 
 searchIngredients.addEventListener("input", () => trying(ingredientsBtn));
 searchUstensiles.addEventListener("input", () => searchLi(UstensilesBtn));
 searchAppareils.addEventListener("input", () => searchLi(AppareilsBtn));
 
-function trying(ul) {
+async function trying(ul) {
   let resultatArray = searchCards()
   let sortedArray = sorting(resultatArray);
 
-  console.log(sortedArray);
-
-  let newLi = createLi(ul,sortedArray)
+  let newLi = await createLi(ul,sortedArray)
  
   console.log(newLi);
 
