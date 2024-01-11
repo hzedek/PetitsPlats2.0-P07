@@ -126,7 +126,11 @@ ul {
   top: 40px;
   padding: 0;
 }
-li {
+ul div{
+  display: flex;
+  flex-direction: column;
+}
+li{
   list-style-type: none;
   cursor: pointer;
   line-height: 26px;
