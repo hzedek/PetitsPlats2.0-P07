@@ -12,24 +12,28 @@ const AppareilLi = document.getElementById("AppareilsLi");
 
 //RÉCUPÉRATION DES DONNÉES PAR BOUTTONS ET CRITÈRES
 
-async function createLi(ul,array) {
+function createLi(ul,array) {
+  let idLi = ul
   let divLi = ul.children[2]; 
   divLi.innerHTML = "";
   let listLi = [];
   for (let i = 0; i < array.length; i++) {
-    if (AppareilsBtn) {
+    if (idLi == AppareilsBtn) {
       itemLi = array[i].appliance;
+     // listLi.push(itemLi);
     }
-    if (UstensilesBtn) {
+    if (UstensilesBtn === idLi) {
       let Ustensiles = array[i].ustensils;
     for (let x = 0; x < Ustensiles.length; x++) {
       itemLi = Ustensiles[x];
+     //listLi.push(itemLi);
     }
     }
-    if (ingredientsBtn) {
+    if (ingredientsBtn == idLi) {
       let ingredients = array[i].ingredients;
   for (let x = 0; x < ingredients.length; x++) {
      itemLi = ingredients[x].ingredient;
+     //listLi.push(itemLi);
   }
     }
     listLi.push(itemLi);
@@ -45,25 +49,20 @@ async function createLi(ul,array) {
   return newlistLi
 }
 
-searchIngredients.addEventListener("input", () => trying(ingredientsBtn));
+searchIngredients.addEventListener("input", () => searchLi(ingredientsBtn));
 searchUstensiles.addEventListener("input", () => searchLi(UstensilesBtn));
 searchAppareils.addEventListener("input", () => searchLi(AppareilsBtn));
 
-async function trying(ul) {
+async function searchLi(ul) {
   let resultatArray = searchCards()
   let sortedArray = sorting(resultatArray);
 
   let newLi = await createLi(ul,sortedArray)
- 
-  console.log(newLi);
-
   let searchTermi = ul.children[0].value.toLowerCase();
   let LiArray = newLi.filter((value) =>
-  value.toLowerCase().split(' ').some(part => part.toLowerCase().includes(searchTermi.toLowerCase()))  );
+  value.toLowerCase().includes(searchTermi.toLowerCase()))
   
   let newLiArray = [...new Set(LiArray)];
-
-  console.log(newLiArray);
 
   ul.children[2].innerHTML = "";
 
@@ -75,27 +74,6 @@ async function trying(ul) {
     ul.children[2].appendChild(li_dom);
   }
   changeLi()
-}
-
-function searchLi(ul) {
-  let allLi = ul.children[2].children;
-  let searchLiArray = [];
-  for (let index = 0; index < allLi.length; index++) {
-    const el = allLi[index];
-    searchLiArray.push(el);
-  }
-
-  let searchTerm = ul.children[0].value;
-  let newLiArray = searchLiArray.filter((value) =>
-    value.innerHTML.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  let liInjection = ul.children[2];
-  liInjection.innerHTML = "";
-  for (let i = 0; i < newLiArray.length; i++) {
-    const li = newLiArray[i];
-    liInjection.appendChild(li);
-  }
 }
 
 function btnToggle(btn) {
