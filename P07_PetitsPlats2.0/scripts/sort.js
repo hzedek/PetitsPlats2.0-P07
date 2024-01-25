@@ -46,84 +46,105 @@ function createLi(ul, array) {
     divLi.appendChild(li_dom);
     li_dom.addEventListener("click", (event) => clickLi(event, array, ul));
   }
-
   return newlistLi;
 }
 
-searchIngredients.addEventListener("input", () => searchLi(ingredientsBtn));
-searchUstensiles.addEventListener("input", () => searchLi(UstensilesBtn));
-searchAppareils.addEventListener("input", () => searchLi(AppareilsBtn));
+searchIngredients.addEventListener("input", () =>
+  searchLi(ingredientsBtn)
+);
+searchUstensiles.addEventListener("input", () =>
+  searchLi(UstensilesBtn)
+);
+searchAppareils.addEventListener("input", () =>
+  searchLi(AppareilsBtn)
+);
 
 function searchLi(ul) {
-  let searchArray
-  if (tagArray.length>0) {
-    searchArray =clickSearch()  
-  }
-  if (searchCards()) {
-     searchArray = searchCards();
-  }
-  else{
-    searchArray=recipes
-  }
-    let li = createLi(ul, searchArray);
-    let searchTerm = ul.children[0].value.toLowerCase();
-    let LiArray = li.filter((value) =>
-      value.trim().toLowerCase().includes(searchTerm)
-    );
-    let trimmedLiArray = LiArray.map((value) => value.trim().toLowerCase());
-    let uniqueTrimmedLiArray = [...new Set(trimmedLiArray)];
-    ul.children[2].innerHTML = "";
-    // Méthode filter pour créer un nouvel array avec les résultats de la recherche
-    let resultatArray = [];
-    for (let index = 0; index < searchArray.length; index++) {
-      if (ul.id == "ingredients") {
-        const element = searchArray[index].ingredients;
-        const resultatIngredient = element.filter((recip) =>
-          recip.ingredient.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        if (resultatIngredient.length > 0) {
-          resultatArray.push(searchArray[index]);
-        }
+  let searchArray =recipes
+  switch (tagArray.length) {
+    case 0:
+      if (searchCards()) {
+        searchArray = searchCards();
       }
-      if (ul.id == "Appareils") {
-        const element = searchArray[index].appliance;
-        const resultatappareils = element
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase());
-        if (resultatappareils === true) {
-          resultatArray.push(searchArray[index]);
-        }
+      
+      break;
+    default:
+      let array = recipes;
+      let tags = tagArray;
+      if (searchCards()) {
+        array = searchCards();
       }
-      if (ul.id == "Ustensiles") {
-        const element = searchArray[index].ustensils;
-        const resultatustensils = element.filter((recip) =>
-          recip.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        if (resultatustensils.length > 0) {
-          resultatArray.push(searchArray[index]);
-        }
-      }
-    }
-    let sortedArray = sorting(resultatArray);
-    for (let i = 0; i < uniqueTrimmedLiArray.length; i++) {
-      const li = uniqueTrimmedLiArray[i];
-      let li_dom = document.createElement("li");
-      li_dom.textContent = li;
-      ul.children[2].appendChild(li_dom);
-      li_dom.addEventListener("click", (event) =>
-        clickLi(event, sortedArray, ul)
+      searchArray = array.filter((recipe) =>
+        tags.every(
+          (tag) =>
+            recipe.ingredients.some((ing) =>
+              ing.ingredient.toLowerCase().includes(tag.toLowerCase())
+            ) ||
+            recipe.ustensils.some((ustensil) =>
+              ustensil.toLowerCase().includes(tag.toLowerCase())
+            ) ||
+            recipe.appliance.toLowerCase().includes(tag.toLowerCase())
+        )
       );
-    }
-    cardContent.innerHTML = "";
-    cardDisplay(sortedArray);
-    nbrRecette(sortedArray);
-    tagList();
+      break;
+  }
+      let li = createLi(ul, searchArray);
+      let searchTerm = ul.children[0].value.toLowerCase();
+      let LiArray = li.filter((value) =>
+        value.trim().toLowerCase().includes(searchTerm)
+      );
+      let trimmedLiArray = LiArray.map((value) => value.trim().toLowerCase());
+      let uniqueTrimmedLiArray = [...new Set(trimmedLiArray)];
+      ul.children[2].innerHTML = "";
+      // Méthode filter pour créer un nouvel array avec les résultats de la recherche
+      let resultatArray = [];
+      for (let index = 0; index < searchArray.length; index++) {
+        if (ul.id == "ingredients") {
+          const element = searchArray[index].ingredients;
+          const resultatIngredient = element.filter((recip) =>
+            recip.ingredient.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+          if (resultatIngredient.length > 0) {
+            resultatArray.push(searchArray[index]);
+          }
+        }
+        if (ul.id == "Appareils") {
+          const element = searchArray[index].appliance;
+          const resultatappareils = element
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase());
+          if (resultatappareils === true) {
+            resultatArray.push(searchArray[index]);
+          }
+        }
+        if (ul.id == "Ustensiles") {
+          const element = searchArray[index].ustensils;
+          const resultatustensils = element.filter((recip) =>
+            recip.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+          if (resultatustensils.length > 0) {
+            resultatArray.push(searchArray[index]);
+          }
+        }
+      }
+      let sortedArray = sorting(resultatArray);
+      for (let i = 0; i < uniqueTrimmedLiArray.length; i++) {
+        const li = uniqueTrimmedLiArray[i];
+        let li_dom = document.createElement("li");
+        li_dom.textContent = li;
+        ul.children[2].appendChild(li_dom);
+        li_dom.addEventListener("click", (event) =>
+          clickLi(event, sortedArray, ul)
+        );
+      }
+      cardContent.innerHTML = "";
+      cardDisplay(sortedArray);
+      nbrRecette(sortedArray);
 }
 
 //créer un nouvel array avec les résultats de la recherche
 function searchCards() {
   if (searchDOM.value.length > 2) {
-    tagArray = [];
     let searchTerm = searchDOM.value;
 
     // Utilisez la méthode filter pour créer un nouvel array avec les résultats de la recherche
@@ -210,6 +231,7 @@ function init(array) {
   nbrRecette(array);
   cardDisplay(array);
   tagList();
+  console.log(array,"init");
 }
 init([...recipes]);
 
@@ -231,26 +253,26 @@ function clickLi(event, array, ul) {
     init(clickLiArray);
   }
 }
-
-function tagList() {
-  tagDiv.innerHTML = "";
-  for (let index = 0; index < tagArray.length; index++) {
-    const eachli = tagArray[index];
-    let tag = document.createElement("div");
-    tag.textContent = eachli;
-    tagDiv.appendChild(tag);
+function tagSearch(tags) {
+  let array = recipes;
+  if (searchCards()) {
+    array = searchCards();
+    console.log(array);
   }
-  let li = document.querySelectorAll("li");
-  for (let i = 0; i < tagArray.length; i++) {
-    const element = tagArray[i];
-    li.forEach((eachLi) => {
-      if (eachLi.innerHTML == element) {
-        eachLi.style.backgroundColor = "rgb(255, 209, 91)";
-        eachLi.style.margin = "5px 0px";
-      }
-    });
-  }
+  return array.filter((recipe) =>
+    tags.some(
+      (tag) =>
+        recipe.ingredients.some((ing) =>
+          ing.ingredient.toLowerCase().includes(tag.toLowerCase())
+        ) ||
+        recipe.ustensils.some((ustensil) =>
+          ustensil.toLowerCase().includes(tag.toLowerCase())
+        ) ||
+        recipe.appliance.toLowerCase().includes(tag.toLowerCase())
+    )
+  );
 }
+
 function clickSearch(el, array, ul) {
   let resultatArray = [];
   for (let index = 0; index < array.length; index++) {
@@ -284,26 +306,28 @@ function clickSearch(el, array, ul) {
       }
     }
   }
-//peut etre creer une fonction pour searchLi
-      console.log(resultatArray);
+  
   let clickLiArray = sorting(resultatArray);
   return clickLiArray;
 }
-function tagSearch(tags) {
-  let array = recipes;
-  if (searchCards()) {
-    array = searchCards();
+
+
+function tagList() {
+  tagDiv.innerHTML = "";
+  for (let index = 0; index < tagArray.length; index++) {
+    const eachli = tagArray[index];
+    let tag = document.createElement("div");
+    tag.textContent = eachli;
+    tagDiv.appendChild(tag);
   }
-  return array.filter((recipe) =>
-    tags.some(
-      (tag) =>
-        recipe.ingredients.some((ing) =>
-          ing.ingredient.toLowerCase().includes(tag.toLowerCase())
-        ) ||
-        recipe.ustensils.some((ustensil) =>
-          ustensil.toLowerCase().includes(tag.toLowerCase())
-        ) ||
-        recipe.appliance.toLowerCase().includes(tag.toLowerCase())
-    )
-  );
+  let li = document.querySelectorAll("li");
+  for (let i = 0; i < tagArray.length; i++) {
+    const element = tagArray[i];
+    li.forEach((eachLi) => {
+      if (eachLi.innerHTML == element) {
+        eachLi.style.backgroundColor = "rgb(255, 209, 91)";
+        eachLi.style.margin = "5px 0px";
+      }
+    });
+  }
 }
