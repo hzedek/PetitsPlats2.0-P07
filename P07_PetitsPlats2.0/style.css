@@ -235,3 +235,6 @@ margin: 5px 0px;
   margin-right: 20px;
   border-radius: 11px;
 }
+#tag{
+  display: flex;
+}

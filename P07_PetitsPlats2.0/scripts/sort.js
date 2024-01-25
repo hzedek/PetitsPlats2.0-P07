@@ -10,6 +10,7 @@ const searchIngredients = document.getElementById("searchIngredients");
 const ingredientLi = document.getElementById("ingredientsLi");
 const UstensileLi = document.getElementById("UstensilesLi");
 const AppareilLi = document.getElementById("AppareilsLi");
+let tagArray = [];
 
 //RÉCUPÉRATION DES DONNÉES PAR BOUTTONS ET CRITÈRES
 function createLi(ul, array) {
@@ -20,20 +21,20 @@ function createLi(ul, array) {
   for (let i = 0; i < array.length; i++) {
     if (idLi === AppareilsBtn) {
       itemLi = array[i].appliance;
-      listLi.push(itemLi);
+      listLi.push(itemLi.toLowerCase());
     }
     if (UstensilesBtn === idLi) {
       let Ustensiles = array[i].ustensils;
       for (let x = 0; x < Ustensiles.length; x++) {
         itemLi = Ustensiles[x];
-        listLi.push(itemLi);
+        listLi.push(itemLi.toLowerCase());
       }
     }
     if (ingredientsBtn === idLi) {
       let ingredients = array[i].ingredients;
       for (let x = 0; x < ingredients.length; x++) {
         itemLi = ingredients[x].ingredient;
-        listLi.push(itemLi);
+        listLi.push(itemLi.toLowerCase());
       }
     }
   }
@@ -43,7 +44,7 @@ function createLi(ul, array) {
     let li_dom = document.createElement("li");
     li_dom.textContent = li;
     divLi.appendChild(li_dom);
-    li_dom.addEventListener("click", (event) => clickLi(event,array,ul));
+    li_dom.addEventListener("click", (event) => clickLi(event, array, ul));
   }
 
   return newlistLi;
@@ -54,8 +55,16 @@ searchUstensiles.addEventListener("input", () => searchLi(UstensilesBtn));
 searchAppareils.addEventListener("input", () => searchLi(AppareilsBtn));
 
 function searchLi(ul) {
+  let searchArray
+  if (tagArray.length>0) {
+    searchArray =clickSearch()  
+  }
   if (searchCards()) {
-    let searchArray = searchCards();
+     searchArray = searchCards();
+  }
+  else{
+    searchArray=recipes
+  }
     let li = createLi(ul, searchArray);
     let searchTerm = ul.children[0].value.toLowerCase();
     let LiArray = li.filter((value) =>
@@ -64,20 +73,8 @@ function searchLi(ul) {
     let trimmedLiArray = LiArray.map((value) => value.trim().toLowerCase());
     let uniqueTrimmedLiArray = [...new Set(trimmedLiArray)];
     ul.children[2].innerHTML = "";
-
-    for (let i = 0; i < uniqueTrimmedLiArray.length; i++) {
-      const li = uniqueTrimmedLiArray[i];
-      let li_dom = document.createElement("li");
-      li_dom.textContent = li;
-      ul.children[2].appendChild(li_dom);
-      li_dom.addEventListener("click", (event) =>
-        clickLi(event, uniqueTrimmedLiArray, ul)
-      );
-    }
-    // Utilisez la méthode filter pour créer un nouvel array avec les résultats de la recherche
+    // Méthode filter pour créer un nouvel array avec les résultats de la recherche
     let resultatArray = [];
-    console.log(searchArray);
-
     for (let index = 0; index < searchArray.length; index++) {
       if (ul.id == "ingredients") {
         const element = searchArray[index].ingredients;
@@ -88,18 +85,15 @@ function searchLi(ul) {
           resultatArray.push(searchArray[index]);
         }
       }
-
       if (ul.id == "Appareils") {
         const element = searchArray[index].appliance;
         const resultatappareils = element
           .toLowerCase()
           .includes(searchTerm.toLowerCase());
-        console.log(searchArray[index], resultatappareils);
         if (resultatappareils === true) {
           resultatArray.push(searchArray[index]);
         }
       }
-
       if (ul.id == "Ustensiles") {
         const element = searchArray[index].ustensils;
         const resultatustensils = element.filter((recip) =>
@@ -111,74 +105,25 @@ function searchLi(ul) {
       }
     }
     let sortedArray = sorting(resultatArray);
-    cardContent.innerHTML = "";
-    cardDisplay(sortedArray);
-    nbrRecette(sortedArray);
-  } else {
-    let newLi = createLi(ul, recipes);
-    let searchTerm = ul.children[0].value.toLowerCase();
-    let LiArray = newLi.filter((value) =>
-      value.trim().toLowerCase().includes(searchTerm)
-    );
-    let trimmedLiArray = LiArray.map((value) => value.trim().toLowerCase());
-    let uniqueTrimmedLiArray = [...new Set(trimmedLiArray)];
-    ul.children[2].innerHTML = "";
-
     for (let i = 0; i < uniqueTrimmedLiArray.length; i++) {
       const li = uniqueTrimmedLiArray[i];
       let li_dom = document.createElement("li");
       li_dom.textContent = li;
       ul.children[2].appendChild(li_dom);
       li_dom.addEventListener("click", (event) =>
-        clickLi(event, uniqueTrimmedLiArray, ul)
+        clickLi(event, sortedArray, ul)
       );
     }
-
-    // Utilisez la méthode filter pour créer un nouvel array avec les résultats de la recherche
-
-    let resultatArray = [];
-    for (let index = 0; index < recipes.length; index++) {
-      if (ul.id == "ingredients") {
-        const element = recipes[index].ingredients;
-        const resultatIngredient = element.filter((recip) =>
-          recip.ingredient.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        if (resultatIngredient.length > 0) {
-          resultatArray.push(recipes[index]);
-        }
-      }
-
-      if (ul.id == "Appareils") {
-        const element = recipes[index].appliance;
-        const resultatappareils = element
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase());
-        if (resultatappareils === true) {
-          resultatArray.push(recipes[index]);
-        }
-      }
-
-      if (ul.id == "Ustensiles") {
-        const element = recipes[index].ustensils;
-        const resultatustensils = element.filter((recip) =>
-          recip.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        if (resultatustensils.length > 0) {
-          resultatArray.push(recipes[index]);
-        }
-      }
-    }
-
-    let sortedArray = sorting(resultatArray);
     cardContent.innerHTML = "";
     cardDisplay(sortedArray);
     nbrRecette(sortedArray);
-  }
+    tagList();
 }
 
 //créer un nouvel array avec les résultats de la recherche
 function searchCards() {
   if (searchDOM.value.length > 2) {
+    tagArray = [];
     let searchTerm = searchDOM.value;
 
     // Utilisez la méthode filter pour créer un nouvel array avec les résultats de la recherche
@@ -210,10 +155,12 @@ function searchCards() {
       resultatArray.push(eachResult);
     }
     let sortedArray = sorting(resultatArray);
-    cardContent.innerHTML = "";
     init(sortedArray);
+    if (sortedArray.length == 0) {
+      cardContent.innerHTML = `<p>Aucune recette ne contient "${searchTerm}"vous pouvez chercher «tarte aux pommes », « poisson », etc..</p>`;
+    }
     return sortedArray;
-  } else (cardContent.innerHTML = ""), init([...recipes]);
+  } else init([...recipes]);
 }
 //Fonction pour supprimer les doublons de l'array de searchCards
 
@@ -256,90 +203,107 @@ function nbrRecette(array) {
 }
 //Fonction qui lance l'affichage de la page
 function init(array) {
+  cardContent.innerHTML = "";
   createLi(ingredientsBtn, array);
   createLi(AppareilsBtn, array);
   createLi(UstensilesBtn, array);
   nbrRecette(array);
   cardDisplay(array);
+  tagList();
 }
 init([...recipes]);
 
-function clickLi(event,array,ul) {
-  let nbrReceip = document.querySelectorAll("article");
+function clickLi(event, array, ul) {
   const el = event.target.innerHTML;
-  if (event.target.style.backgroundColor === "rgb(255, 209, 91)") {
-    event.target.style.backgroundColor = ""
+  if (event.target.style.backgroundColor == "rgb(255, 209, 91)") {
+    event.target.style.backgroundColor = "";
     event.target.style.margin = "";
+    tagArray = tagArray.filter((item) => item !== el);
+    if (tagArray.length < 1) {
+      init(recipes);
+    } else {
+      let tagArrayResult = tagSearch(tagArray);
+      init(tagArrayResult);
+    }
+  } else {
+    tagArray.push(el);
+    let clickLiArray = clickSearch(el, array, ul);
+    init(clickLiArray);
   }
-  else{
-  if (nbrReceip.length == array.length) {
-    let resultatArray = [];
-    for (let index = 0; index < array.length; index++) {
-      const recette = array[index].ingredients;
-      const resultatIngredient = recette.filter((recip) =>
+}
+
+function tagList() {
+  tagDiv.innerHTML = "";
+  for (let index = 0; index < tagArray.length; index++) {
+    const eachli = tagArray[index];
+    let tag = document.createElement("div");
+    tag.textContent = eachli;
+    tagDiv.appendChild(tag);
+  }
+  let li = document.querySelectorAll("li");
+  for (let i = 0; i < tagArray.length; i++) {
+    const element = tagArray[i];
+    li.forEach((eachLi) => {
+      if (eachLi.innerHTML == element) {
+        eachLi.style.backgroundColor = "rgb(255, 209, 91)";
+        eachLi.style.margin = "5px 0px";
+      }
+    });
+  }
+}
+function clickSearch(el, array, ul) {
+  let resultatArray = [];
+  for (let index = 0; index < array.length; index++) {
+    if (ul.id == "ingredients") {
+      const element = array[index].ingredients;
+      const resultatIngredient = element.filter((recip) =>
         recip.ingredient.toLowerCase().includes(el.toLowerCase())
       );
       if (resultatIngredient.length > 0) {
         resultatArray.push(array[index]);
       }
     }
-    let sortedArray = sorting(resultatArray);
-    cardContent.innerHTML = "";
-    init(sortedArray);
-  } 
-  let tag = document.createElement("div");
-  tag.textContent = el;
-  tagDiv.appendChild(tag);
-  let li = document.querySelectorAll("li");
-  li.forEach((element) => {
-    if (element.innerHTML === event.target.innerHTML) {
-      element.style.backgroundColor = "rgb(255, 209, 91)";
-      element.style.margin = "5px 0px";
+
+    if (ul.id == "Appareils") {
+      const element = array[index].appliance;
+      const resultatappareils = element
+        .toLowerCase()
+        .includes(el.toLowerCase());
+      if (resultatappareils === true) {
+        resultatArray.push(array[index]);
+      }
     }
-  });}
+
+    if (ul.id == "Ustensiles") {
+      const element = array[index].ustensils;
+      const resultatustensils = element.filter((recip) =>
+        recip.toLowerCase().includes(el.toLowerCase())
+      );
+      if (resultatustensils.length > 0) {
+        resultatArray.push(array[index]);
+      }
+    }
+  }
+//peut etre creer une fonction pour searchLi
+      console.log(resultatArray);
+  let clickLiArray = sorting(resultatArray);
+  return clickLiArray;
 }
-
-
-function searchClickLi(event, array, ul) {
-  console.log(array);
-  console.log(ul);
-  const el = event.target.innerHTML;
-  let resultatName = array.filter((recip) =>
-    recip.toLowerCase().includes(el.toLowerCase())
+function tagSearch(tags) {
+  let array = recipes;
+  if (searchCards()) {
+    array = searchCards();
+  }
+  return array.filter((recipe) =>
+    tags.some(
+      (tag) =>
+        recipe.ingredients.some((ing) =>
+          ing.ingredient.toLowerCase().includes(tag.toLowerCase())
+        ) ||
+        recipe.ustensils.some((ustensil) =>
+          ustensil.toLowerCase().includes(tag.toLowerCase())
+        ) ||
+        recipe.appliance.toLowerCase().includes(tag.toLowerCase())
+    )
   );
-
-  for (let index = 0; index < array.length; index++) {
-    const recette = array[index].ingredients;
-    console.log(array[index].ingredients);
-    const resultatIngredient = recette.filter((recip) =>
-      recip.ingredient.toLowerCase().includes(el.toLowerCase())
-    );
-    if (resultatIngredient.length > 0) {
-      resultatArray.push(array[index]);
-    }
-  }
-  for (let x = 0; x < resultatName.length; x++) {
-    const eachResult = resultatName[x];
-    resultatArray.push(eachResult);
-  }
-  for (let i = 0; i < resultatdescription.length; i++) {
-    const eachResult = resultatdescription[i];
-    resultatArray.push(eachResult);
-  }
-  let sortedArray = sorting(resultatArray);
-  cardContent.innerHTML = "";
-  init(sortedArray);
-  let tag = document.createElement("div");
-  tag.textContent = el;
-  tagDiv.appendChild(tag);
-  let li = document.querySelectorAll("li");
-  li.forEach((element) => {
-    if (element.innerHTML === event.target.innerHTML) {
-      console.log(element);
-      console.log(event.target);
-      element.style.backgroundColor = element.style.backgroundColor =
-        element.style.backgroundColor === "" ? "rgb(255, 209, 91)" : "";
-      element.style.margin = element.style.margin === "" ? "5px 0px" : "";
-    }
-  });
 }
