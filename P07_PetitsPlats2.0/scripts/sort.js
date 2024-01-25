@@ -319,6 +319,7 @@ function tagList() {
     let tag = document.createElement("div");
     tag.textContent = eachli;
     tagDiv.appendChild(tag);
+    tag.addEventListener("click",(event)=>deleteTag(event))
   }
   let li = document.querySelectorAll("li");
   for (let i = 0; i < tagArray.length; i++) {
@@ -330,4 +331,14 @@ function tagList() {
       }
     });
   }
+}
+function deleteTag(event) {
+ let el = event.target.innerHTML
+    tagArray = tagArray.filter((item) => item !== el);
+    if (tagArray.length < 1) {
+      init(recipes);
+    } else {
+      let tagArrayResult = tagSearch(tagArray);
+      init(tagArrayResult);
+    }
 }
