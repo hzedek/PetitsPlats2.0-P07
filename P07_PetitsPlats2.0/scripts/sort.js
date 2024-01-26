@@ -74,6 +74,7 @@ function searchLi(ul) {
       if (searchCards()) {
         array = searchCards();
       }
+      console.log(array);
       searchArray = array.filter((recipe) =>
         tags.every(
           (tag) =>
@@ -257,10 +258,10 @@ function tagSearch(tags) {
   let array = recipes;
   if (searchCards()) {
     array = searchCards();
-    console.log(array);
+    console.log(array,"this one");
   }
-  return array.filter((recipe) =>
-    tags.some(
+  let result = array.filter((recipe) =>
+    tags.every(
       (tag) =>
         recipe.ingredients.some((ing) =>
           ing.ingredient.toLowerCase().includes(tag.toLowerCase())
@@ -271,6 +272,7 @@ function tagSearch(tags) {
         recipe.appliance.toLowerCase().includes(tag.toLowerCase())
     )
   );
+  return result
 }
 
 function clickSearch(el, array, ul) {
@@ -335,10 +337,6 @@ function tagList() {
 function deleteTag(event) {
  let el = event.target.innerHTML
     tagArray = tagArray.filter((item) => item !== el);
-    if (tagArray.length < 1) {
-      init(recipes);
-    } else {
       let tagArrayResult = tagSearch(tagArray);
       init(tagArrayResult);
     }
-}
