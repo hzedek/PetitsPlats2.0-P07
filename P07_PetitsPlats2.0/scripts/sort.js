@@ -74,7 +74,6 @@ function searchLi(ul) {
       if (searchCards()) {
         array = searchCards();
       }
-      console.log(array);
       searchArray = array.filter((recipe) =>
         tags.every(
           (tag) =>
@@ -232,12 +231,12 @@ function init(array) {
   nbrRecette(array);
   cardDisplay(array);
   tagList();
-  console.log(array,"init");
 }
 init([...recipes]);
 
 function clickLi(event, array, ul) {
   const el = event.target.innerHTML;
+  // Supprime un tag au click sur le li
   if (event.target.style.backgroundColor == "rgb(255, 209, 91)") {
     event.target.style.backgroundColor = "";
     event.target.style.margin = "";
@@ -254,11 +253,11 @@ function clickLi(event, array, ul) {
     init(clickLiArray);
   }
 }
+//Fait une recherche grâce au tags
 function tagSearch(tags) {
   let array = recipes;
   if (searchCards()) {
     array = searchCards();
-    console.log(array,"this one");
   }
   let result = array.filter((recipe) =>
     tags.every(
@@ -274,7 +273,7 @@ function tagSearch(tags) {
   );
   return result
 }
-
+//Fait une recherche au moment du click sur un Li
 function clickSearch(el, array, ul) {
   let resultatArray = [];
   for (let index = 0; index < array.length; index++) {
@@ -313,7 +312,7 @@ function clickSearch(el, array, ul) {
   return clickLiArray;
 }
 
-
+//Lance l'affichage des tags
 function tagList() {
   tagDiv.innerHTML = "";
   for (let index = 0; index < tagArray.length; index++) {
@@ -334,6 +333,7 @@ function tagList() {
     });
   }
 }
+// Supprime un tag au click sur le tag
 function deleteTag(event) {
  let el = event.target.innerHTML
     tagArray = tagArray.filter((item) => item !== el);
