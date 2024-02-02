@@ -11,6 +11,7 @@ const ingredientLi = document.getElementById("ingredientsLi");
 const UstensileLi = document.getElementById("UstensilesLi");
 const AppareilLi = document.getElementById("AppareilsLi");
 let tagArray = [];
+let theArray = []
 
 //RÉCUPÉRATION DES DONNÉES PAR BOUTTONS ET CRITÈRES
 function createLi(ul, array) {
@@ -46,30 +47,29 @@ function createLi(ul, array) {
     divLi.appendChild(li_dom);
     li_dom.addEventListener("click", (event) => clickLi(event, array, ul));
   }
+  yellowLi()
   return newlistLi;
 }
 
-searchIngredients.addEventListener("input", () =>
-  searchLi(ingredientsBtn)
-);
-searchUstensiles.addEventListener("input", () =>
-  searchLi(UstensilesBtn)
-);
-searchAppareils.addEventListener("input", () =>
-  searchLi(AppareilsBtn)
-);
+searchIngredients.addEventListener("input", () => searchLi(ingredientsBtn,UstensilesBtn,AppareilsBtn));
+searchUstensiles.addEventListener("input", () => searchLi(UstensilesBtn,AppareilsBtn,ingredientsBtn));
+searchAppareils.addEventListener("input", () => searchLi(AppareilsBtn,ingredientsBtn,UstensilesBtn));
 
-function searchLi(ul) {
-  let searchArray =recipes
+function searchLi(ul,second_ul,third_ul) {
+  let searchArray = recipes;
   switch (tagArray.length) {
     case 0:
       if (searchCards()) {
         searchArray = searchCards();
       }
-      
+
       break;
     default:
-      let array = recipes;
+      let array = theArray
+      if (theArray.length==0) {
+         array = recipes
+      }
+     
       let tags = tagArray;
       if (searchCards()) {
         array = searchCards();
@@ -87,59 +87,65 @@ function searchLi(ul) {
         )
       );
       break;
-  }
-      let li = createLi(ul, searchArray);
-      let searchTerm = ul.children[0].value.toLowerCase();
-      let LiArray = li.filter((value) =>
-        value.trim().toLowerCase().includes(searchTerm)
+      }
+      
+  let li = createLi(ul, searchArray);
+  let searchTerm = ul.children[0].value.toLowerCase();
+  let LiArray = li.filter((value) =>
+    value.trim().toLowerCase().includes(searchTerm)
+  );
+  let trimmedLiArray = LiArray.map((value) => value.trim().toLowerCase());
+  let uniqueTrimmedLiArray = [...new Set(trimmedLiArray)];
+  ul.children[2].innerHTML = "";
+  // Méthode filter pour créer un nouvel array avec les résultats de la recherche
+  let resultatArray = [];
+  for (let index = 0; index < searchArray.length; index++) {
+    if (ul.id == "ingredients") {
+      const element = searchArray[index].ingredients;
+      const resultatIngredient = element.filter((recip) =>
+        recip.ingredient.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      let trimmedLiArray = LiArray.map((value) => value.trim().toLowerCase());
-      let uniqueTrimmedLiArray = [...new Set(trimmedLiArray)];
-      ul.children[2].innerHTML = "";
-      // Méthode filter pour créer un nouvel array avec les résultats de la recherche
-      let resultatArray = [];
-      for (let index = 0; index < searchArray.length; index++) {
-        if (ul.id == "ingredients") {
-          const element = searchArray[index].ingredients;
-          const resultatIngredient = element.filter((recip) =>
-            recip.ingredient.toLowerCase().includes(searchTerm.toLowerCase())
-          );
-          if (resultatIngredient.length > 0) {
-            resultatArray.push(searchArray[index]);
-          }
-        }
-        if (ul.id == "Appareils") {
-          const element = searchArray[index].appliance;
-          const resultatappareils = element
-            .toLowerCase()
-            .includes(searchTerm.toLowerCase());
-          if (resultatappareils === true) {
-            resultatArray.push(searchArray[index]);
-          }
-        }
-        if (ul.id == "Ustensiles") {
-          const element = searchArray[index].ustensils;
-          const resultatustensils = element.filter((recip) =>
-            recip.toLowerCase().includes(searchTerm.toLowerCase())
-          );
-          if (resultatustensils.length > 0) {
-            resultatArray.push(searchArray[index]);
-          }
-        }
+      if (resultatIngredient.length > 0) {
+        resultatArray.push(searchArray[index]);
       }
-      let sortedArray = sorting(resultatArray);
-      for (let i = 0; i < uniqueTrimmedLiArray.length; i++) {
-        const li = uniqueTrimmedLiArray[i];
-        let li_dom = document.createElement("li");
-        li_dom.textContent = li;
-        ul.children[2].appendChild(li_dom);
-        li_dom.addEventListener("click", (event) =>
-          clickLi(event, sortedArray, ul)
-        );
+    }
+    if (ul.id == "Appareils") {
+      const element = searchArray[index].appliance;
+      const resultatappareils = element
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      if (resultatappareils === true) {
+        resultatArray.push(searchArray[index]);
       }
-      cardContent.innerHTML = "";
-      cardDisplay(sortedArray);
-      nbrRecette(sortedArray);
+    }
+    if (ul.id == "Ustensiles") {
+      const element = searchArray[index].ustensils;
+      const resultatustensils = element.filter((recip) =>
+        recip.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      if (resultatustensils.length > 0) {
+        resultatArray.push(searchArray[index]);
+      }
+    }
+  }
+  let sortedArray = sorting(resultatArray);
+  for (let i = 0; i < uniqueTrimmedLiArray.length; i++) {
+    const li = uniqueTrimmedLiArray[i];
+    let li_dom = document.createElement("li");
+    li_dom.textContent = li;
+    ul.children[2].appendChild(li_dom);
+    li_dom.addEventListener("click", (event) =>
+      clickLi(event, sortedArray, ul)
+    );
+  }
+  cardContent.innerHTML = "";
+  cardDisplay(sortedArray);
+  nbrRecette(sortedArray);
+  yellowLi()
+  createLi(second_ul,sortedArray)
+  createLi(third_ul,sortedArray)
+ 
+  theArray = sortedArray
 }
 
 //créer un nouvel array avec les résultats de la recherche
@@ -231,6 +237,7 @@ function init(array) {
   nbrRecette(array);
   cardDisplay(array);
   tagList();
+  yellowLi()
 }
 init([...recipes]);
 
@@ -271,7 +278,7 @@ function tagSearch(tags) {
         recipe.appliance.toLowerCase().includes(tag.toLowerCase())
     )
   );
-  return result
+  return result;
 }
 //Fait une recherche au moment du click sur un Li
 function clickSearch(el, array, ul) {
@@ -307,7 +314,7 @@ function clickSearch(el, array, ul) {
       }
     }
   }
-  
+
   let clickLiArray = sorting(resultatArray);
   return clickLiArray;
 }
@@ -320,8 +327,10 @@ function tagList() {
     let tag = document.createElement("div");
     tag.textContent = eachli;
     tagDiv.appendChild(tag);
-    tag.addEventListener("click",(event)=>deleteTag(event))
+    tag.addEventListener("click", (event) => deleteTag(event));
   }
+}
+function yellowLi(){
   let li = document.querySelectorAll("li");
   for (let i = 0; i < tagArray.length; i++) {
     const element = tagArray[i];
@@ -335,8 +344,8 @@ function tagList() {
 }
 // Supprime un tag au click sur le tag
 function deleteTag(event) {
- let el = event.target.innerHTML
-    tagArray = tagArray.filter((item) => item !== el);
-      let tagArrayResult = tagSearch(tagArray);
-      init(tagArrayResult);
-    }
+  let el = event.target.innerHTML;
+  tagArray = tagArray.filter((item) => item !== el);
+  let tagArrayResult = tagSearch(tagArray);
+  init(tagArrayResult);
+}
